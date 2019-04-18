@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# Hook script to warn the user that they're on the master branch before attempting to push
+
+CURRENT_BRANCH=$(git branch)
+
+if [ "$CURRENT_BRANCH" = "* master" ]; then
+
+   echo "You are currently on the master branch, are you sure you want to push? (y/n)"
+   read $YESNO < /dev/tty
+
+   if [ "$YESNO" == "y" ]; then
+       echo "Continuing with push"
+       exit 0
+   else
+       echo "Aborted push" 
+       exit 1
+
+   fi 
+fi
